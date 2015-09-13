@@ -1,0 +1,56 @@
+以此篇来记录STL的一些学习过程（顺便开启github之旅）
+
+//-----------------9.13----------------------
+数字转字符串：
+使用ostringstream，记得要#include<sstream>头文件
+顺便还发现了一个很方便的用法C++11的，也许吧:-D
+还有auto也是超好用的 :-）
+例子：把vector里的整数都变成了字符串
+	string intToString(const vector<int> &vec)
+	{
+		ostringstream os;
+		for(auto x : vec)  //又是一个神奇的用法
+		{
+			os << x;
+		}
+
+		return os.str();
+	}
+	
+
+全排列：
+需要事先将全排列的容器排序，否则可能使全排列不完整，因为它好像是从小到大进行全排列的。
+同样献上例子。
+	vector<int> numbers;
+	vector<vector<int>> strVec;
+	while (next_permutation(numbers.begin(), numbers.end()))
+		{
+			strVec.push_back(numbers);
+		}
+		
+
+连续子数组的最大和：
+用不了STL，只能动态规划了，代码挺简单的，想了挺久，最后还是参考别人的╮(╯▽╰)╭
+
+unique的用法：
+会返回一个迭代器，用于删除容器的后半部分，因为unique之后，多余的元素并没有被删除，而是呆在了后半部分，需要自己删除。
+	auto iter = unique(input.begin(), input.end());
+	input.erase(iter, input.end());
+
+学会了使用for_each和仿函数：
+我们可以把参数通过初始化的方式传递给仿函数对象，具体参考“数组中出现次数超过一半的数字”。
+struct doSomething1  //这个是反函数
+{
+	doSomething1(map<int, int> &hpp) : hp(hpp){}
+
+	map<int, int> &hp;
+	void operator() (int x)  //运算符重载
+	{
+		hp[x]++;
+		return;
+	}
+};
+for_each(numbers.begin(),numbers.end(),doSomething1(mp));
+
+
+
